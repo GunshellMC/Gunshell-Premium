@@ -57,7 +57,7 @@ public class FireablePreFireListener implements Listener {
         int ammo = NBTEditor.getInt(itemStack, GUN_AMMO_KEY);
         int durability = NBTEditor.getInt(itemStack, DURABILITY_KEY);
 
-        if (durability <= 0) {
+        if (durability <= 0 && durability != -1) {
             player.getInventory().removeItem(itemStack);
             return;
         }
@@ -95,7 +95,7 @@ public class FireablePreFireListener implements Listener {
                 fireable.updateItemMeta(itemStack, finalAmmoAmount);
 
                 MessagesConfig.SHOW_AMMO_DURABILITY.get(player,
-                        new PlaceHolder("Durability", String.valueOf(durability)),
+                        new PlaceHolder("Durability", durability == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : String.valueOf(NBTEditor.getInt(itemStack, DURABILITY_KEY))),
                         new PlaceHolder("Ammo", String.valueOf(finalAmmoAmount)),
                         new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
 
@@ -143,7 +143,7 @@ public class FireablePreFireListener implements Listener {
 
         GunshellPlugin.getInstance().getWeaponCooldownMap().put(cooldownKey, System.currentTimeMillis());
         PluginUtils.getInstance().applyNBTTag(itemStack, GUN_AMMO_KEY, ammo - 1);
-        PluginUtils.getInstance().applyNBTTag(itemStack, DURABILITY_KEY, durability - 1);
+        if (durability != -1) PluginUtils.getInstance().applyNBTTag(itemStack, DURABILITY_KEY, durability - 1);
         fireable.updateItemMeta(itemStack, ammo - 1);
 
         PluginUtils.getInstance().performRecoil(player,
@@ -162,7 +162,7 @@ public class FireablePreFireListener implements Listener {
 
         if (NBTEditor.getInt(itemStack, GUN_AMMO_KEY) >= 1) {
             MessagesConfig.SHOW_AMMO_DURABILITY.get(player,
-                    new PlaceHolder("Durability", String.valueOf(NBTEditor.getInt(itemStack, DURABILITY_KEY))),
+                    new PlaceHolder("Durability", durability == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : String.valueOf(NBTEditor.getInt(itemStack, DURABILITY_KEY))),
                     new PlaceHolder("Ammo", String.valueOf(NBTEditor.getInt(itemStack, GUN_AMMO_KEY))),
                     new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
         } else {
