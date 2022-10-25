@@ -16,14 +16,15 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.RayTraceResult;
+import org.bukkit.util.Vector;
 
 import java.util.Optional;
 
 public class v1_19_R1 implements CompatibilityLayer {
     @Override
-    public GunshellRayTraceResult performRayTrace(LivingEntity player, double range) {
+    public GunshellRayTraceResult performRayTrace(LivingEntity player, Vector direction, double range) {
         RayTraceResult result = player.getWorld()
-                .rayTrace(player.getEyeLocation(), player.getLocation().getDirection(), range, FluidCollisionMode.NEVER, true, DefaultConfig.HITBOX_INCREASE.asDouble(), entity ->
+                .rayTrace(player.getEyeLocation(), direction, range, FluidCollisionMode.NEVER, true, DefaultConfig.HITBOX_INCREASE.asDouble(), entity ->
                         entity != player);
         if (result == null) {
             return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), null, PlayerHitPart.NONE);

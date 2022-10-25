@@ -27,8 +27,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public class FireablePreFireListener implements Listener {
@@ -120,7 +123,23 @@ public class FireablePreFireListener implements Listener {
          * Perform the raytrace to find the target
          */
         CompatibilityLayer compatibilityLayer = GunshellPlugin.getInstance().getCompatibilityLayer();
-        GunshellRayTraceResult rayTraceResult = compatibilityLayer.performRayTrace(player, fireable.getRange());
+
+        List<GunshellRayTraceResult> rayTraceResults = new ArrayList<>();
+        for (int i = 0; i < fireable.getRayTraces(); i++) {
+            Vector velocity = player.getLocation().getDirection();
+            if (fireable.getSpread() > 0) {
+                Random random = new Random();
+                velocity.setX(velocity.getX() + (random.nextDouble() * fireable.getSpread() - fireable.getSpread() / 2));
+                velocity.setY(velocity.getY() + (random.nextDouble() * fireable.getSpread() - fireable.getSpread() / 2));
+                velocity.setZ(velocity.getZ() + (random.nextDouble() * fireable.getSpread() - fireable.getSpread() / 2));
+                velocity.normalize();
+            }
+
+            GunshellRayTraceResult rayTraceResult = compatibilityLayer.performRayTrace(player, velocity, fireable.getRange());
+
+
+            rayTraceResults.add(rayTraceResult);
+        }
 
         GunshellPlugin.getInstance().getWeaponCooldownMap().put(cooldownKey, System.currentTimeMillis());
         PluginUtils.getInstance().applyNBTTag(itemStack, GUN_AMMO_KEY, ammo - 1);
@@ -171,22 +190,24 @@ public class FireablePreFireListener implements Listener {
             GunshellPlugin.getInstance().getModifiedPlayerMap().remove(player.getUniqueId());
         }
 
-        if (rayTraceResult.getOptionalBlock().isPresent()) {
-            Block block = rayTraceResult.getOptionalBlock().get();
-            block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
-        }
-
         AmmunitionActionImpl ammunitionAction = AmmunitionActionRegistry.getAction(fireable, ammunition, ammunition.getActionType());
         if (ammunitionAction == null) {
             ChatUtils.sendMessage(player, "&cError: &4Ammunition action not found!");
             return;
         }
 
-        FireableDamageEvent fireableDamageEvent = new FireableDamageEvent(player, rayTraceResult, fireable);
+        FireableDamageEvent fireableDamageEvent = new FireableDamageEvent(player, rayTraceResults, fireable);
         Bukkit.getPluginManager().callEvent(fireableDamageEvent);
         if (fireableDamageEvent.isCancelled()) return;
 
-        ammunitionAction.fireAction(player, rayTraceResult, ammunition.getConfiguration());
+        for (GunshellRayTraceResult rayTraceResult : rayTraceResults) {
+            if (rayTraceResult.getOptionalBlock().isPresent()) {
+                Block block = rayTraceResult.getOptionalBlock().get();
+                block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
+            }
+
+            ammunitionAction.fireAction(player, rayTraceResult, ammunition.getConfiguration());
+        }
     }
 
     private boolean hasCooldown(String cooldownKey, GunshellFireable fireable) {

@@ -9,14 +9,16 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class FireableDamageEvent extends Event implements Cancellable {
     private boolean cancelled;
     private final @Getter Player player;
-    private final @Getter GunshellRayTraceResult rayTraceResult;
+    private final @Getter List<GunshellRayTraceResult> rayTraceResult;
     private final @Getter GunshellFireable fireable;
     private static final HandlerList handlers = new HandlerList();
 
-    public FireableDamageEvent(Player player, GunshellRayTraceResult rayTraceResult, @NotNull GunshellFireable fireable) {
+    public FireableDamageEvent(Player player, List<GunshellRayTraceResult> rayTraceResult, @NotNull GunshellFireable fireable) {
         this.player = player;
         this.rayTraceResult = rayTraceResult;
         this.fireable = fireable;

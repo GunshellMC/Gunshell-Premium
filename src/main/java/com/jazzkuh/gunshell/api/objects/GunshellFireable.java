@@ -48,6 +48,8 @@ public class GunshellFireable implements GunshellWeaponImpl {
     private @Getter @Setter boolean scopeEnabled;
     private @Getter @Setter boolean scopePumpkinBlurEnabled;
     private @Getter @Setter int scopeAmplifier;
+    private @Getter @Setter int rayTraces;
+    private @Getter @Setter double spread;
 
     public GunshellFireable(@NotNull String key, @NotNull ConfigurationSection configuration) {
         this.key = key;
@@ -80,6 +82,8 @@ public class GunshellFireable implements GunshellWeaponImpl {
         this.scopeEnabled = configuration.getBoolean("scope.enabled", false);
         this.scopePumpkinBlurEnabled = configuration.getBoolean("scope.pumpkinBlurEnabled", false);
         this.scopeAmplifier = configuration.getInt("scope.amplifier", 8);
+        this.rayTraces = configuration.getInt("rayTraces", 1);
+        this.spread = configuration.getDouble("spread", 0);
     }
     @Override
     public ItemBuilder getItem(int durability) {

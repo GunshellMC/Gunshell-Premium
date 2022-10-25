@@ -15,6 +15,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.RayTraceResult;
+import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.Optional;
@@ -74,9 +75,9 @@ public class CompatibilityManager {
                     "Loading a fallback compatibility layer but this may cause issues so you are advised to update your server to the latest version.");
             return new CompatibilityLayer() {
                 @Override
-                public GunshellRayTraceResult performRayTrace(LivingEntity player, double range) {
+                public GunshellRayTraceResult performRayTrace(LivingEntity player, Vector direction, double range) {
                     RayTraceResult result = player.getWorld()
-                            .rayTrace(player.getEyeLocation(), player.getLocation().getDirection(), range, FluidCollisionMode.NEVER, true, 0.2, entity ->
+                            .rayTrace(player.getEyeLocation(), direction, range, FluidCollisionMode.NEVER, true, 0.2, entity ->
                                     entity != player);
                     if (result == null) {
                         return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), null, PlayerHitPart.NONE);

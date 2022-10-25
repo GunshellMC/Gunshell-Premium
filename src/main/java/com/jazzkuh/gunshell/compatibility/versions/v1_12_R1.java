@@ -32,9 +32,9 @@ import java.util.function.Predicate;
 
 public class v1_12_R1 implements CompatibilityLayer {
     @Override
-    public GunshellRayTraceResult performRayTrace(LivingEntity player, double range) {
+    public GunshellRayTraceResult performRayTrace(LivingEntity player, Vector direction, double range) {
         Location start = player.getEyeLocation();
-        Vector dir = player.getLocation().getDirection().clone().normalize().multiply(range);
+        Vector dir = direction.clone().normalize().multiply(range);
 
         RayTraceResult result = rayTrace(player, start, dir, range, FluidCollisionMode.NEVER, true, DefaultConfig.HITBOX_INCREASE.asDouble(), null);
         if (result == null) {

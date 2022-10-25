@@ -4,9 +4,10 @@ import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 public interface CompatibilityLayer {
-    GunshellRayTraceResult performRayTrace(LivingEntity player, double range);
+    GunshellRayTraceResult performRayTrace(LivingEntity player, Vector direction, double range);
     String getRayTraceResult(Player player, int range);
     void showEndCreditScene(Player player);
     void showDemoMenu(Player player);
