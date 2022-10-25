@@ -1,4 +1,4 @@
-name: Gunshell
+name: Gunshell-Premium
 version: '${project.version}-${git.commit.id.describe-short}'
 website: 'https://www.spigotmc.org/resources/76350/'
 main: com.jazzkuh.gunshell.GunshellPlugin

@@ -15,7 +15,7 @@ public class PlayerJoinListener implements Listener {
         GunshellPlugin.getInstance().getReloadingSet().remove(player.getUniqueId());
         if (GunshellPlugin.getInstance().getDescription().getAuthors().contains(player.getName())) {
             ChatUtils.sendMessage(player, "&8 ----------------------------------------------");
-            ChatUtils.sendMessage(player, "&8| &aThis server is using Gunshell &2v" + GunshellPlugin.getInstance().getDescription().getVersion() + "&a.");
+            ChatUtils.sendMessage(player, "&8| &dThis server is using " + GunshellPlugin.getInstance().getDescription().getName() + " &5v" + GunshellPlugin.getInstance().getDescription().getVersion() + "&d.");
             ChatUtils.sendMessage(player, "&8 ----------------------------------------------");
         }
     }

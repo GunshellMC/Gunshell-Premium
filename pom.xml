@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.jazzkuh</groupId>
-    <artifactId>Gunshell</artifactId>
+    <artifactId>Gunshell-Premium</artifactId>
     <version>1.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Gunshell</name>
+    <name>Gunshell-Premium</name>
 
     <properties>
-        <project.codename>Gunshell</project.codename>
+        <project.codename>Gunshell-Premium</project.codename>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

@@ -39,10 +39,10 @@ public class GunshellCMD extends AbstractCommand {
 
     private void sendDefaultMessage(CommandSender sender) {
         ChatUtils.sendMessage(sender, "&8 ----------------------------------------------");
-        ChatUtils.sendMessage(sender, "&8| &aThis server is using Gunshell &2v" + GunshellPlugin.getInstance().getDescription().getVersion() + "&a.");
-        ChatUtils.sendMessage(sender, "&8| &2Description: &a" + GunshellPlugin.getInstance().getDescription().getDescription());
-        ChatUtils.sendMessage(sender, "&8| &2Download: &a" + GunshellPlugin.getInstance().getDescription().getWebsite());
-        ChatUtils.sendMessage(sender, "&8| &2Authors: &a" + StringUtils.join(GunshellPlugin.getInstance().getDescription().getAuthors(), ", "));
+        ChatUtils.sendMessage(sender, "&8| &dThis server is using " + GunshellPlugin.getInstance().getDescription().getName() + " &5v" + GunshellPlugin.getInstance().getDescription().getVersion() + "&d.");
+        ChatUtils.sendMessage(sender, "&8| &5Description: &d" + GunshellPlugin.getInstance().getDescription().getDescription());
+        ChatUtils.sendMessage(sender, "&8| &5Download: &d" + GunshellPlugin.getInstance().getDescription().getWebsite());
+        ChatUtils.sendMessage(sender, "&8| &5Authors: &d" + StringUtils.join(GunshellPlugin.getInstance().getDescription().getAuthors(), ", "));
         ChatUtils.sendMessage(sender, "&8 ----------------------------------------------");
     }
 

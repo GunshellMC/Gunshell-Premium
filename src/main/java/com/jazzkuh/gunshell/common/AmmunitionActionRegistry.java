@@ -4,6 +4,8 @@ import com.jazzkuh.gunshell.api.enums.BuiltinAmmoActionType;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.common.actions.ammunition.DamageAction;
+import com.jazzkuh.gunshell.common.actions.ammunition.DemoMenuAction;
+import com.jazzkuh.gunshell.common.actions.ammunition.EndCreditsAction;
 import com.jazzkuh.gunshell.common.actions.ammunition.abstraction.AbstractAmmunitionAction;
 
 import java.util.HashMap;
@@ -14,6 +16,8 @@ public class AmmunitionActionRegistry {
 
     static {
         actions.put(BuiltinAmmoActionType.DAMAGE.toString(), DamageAction.class);
+        actions.put(BuiltinAmmoActionType.END_CREDITS.toString(), EndCreditsAction.class);
+        actions.put(BuiltinAmmoActionType.DEMO_MENU.toString(), DemoMenuAction.class);
     }
 
     public static void registerAction(String actionType, Class<? extends AbstractAmmunitionAction> actionClass) {
