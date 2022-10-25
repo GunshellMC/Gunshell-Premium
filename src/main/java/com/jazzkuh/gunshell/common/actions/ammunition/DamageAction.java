@@ -1,6 +1,7 @@
 package com.jazzkuh.gunshell.common.actions.ammunition;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
+import com.jazzkuh.gunshell.api.enums.PlayerHitPart;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
 import com.jazzkuh.gunshell.api.objects.GunshellFireable;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
@@ -61,13 +62,13 @@ public class DamageAction extends AbstractAmmunitionAction {
                 new PlaceHolder("Name", livingEntity.getName()));
 
         double damage = this.getFireable().getDamage();
-        if (rayTraceResult.isHeadshot()) {
+        if (rayTraceResult.getPlayerHitPart() == PlayerHitPart.HEAD) {
             damage = this.getFireable().getHeadshotDamage();
             MessagesConfig.BULLET_HIT_OTHER_HEADSHOT.get(player,
                     new PlaceHolder("Name", livingEntity.getName()));
         }
 
-        damage = PluginUtils.getInstance().applyProtectionModifier(damage, rayTraceResult.isHeadshot(), livingEntity);
+        damage = PluginUtils.getInstance().applyProtectionModifier(damage, rayTraceResult.getPlayerHitPart() == PlayerHitPart.HEAD, livingEntity);
 
         PluginUtils.getInstance().performRecoil(livingEntity, 0F, this.getFireable().getKnockbackAmount());
 

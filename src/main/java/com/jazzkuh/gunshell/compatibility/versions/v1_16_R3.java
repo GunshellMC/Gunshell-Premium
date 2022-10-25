@@ -1,6 +1,7 @@
 package com.jazzkuh.gunshell.compatibility.versions;
 
 import com.cryptomorin.xseries.XMaterial;
+import com.jazzkuh.gunshell.api.enums.PlayerHitPart;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
@@ -25,25 +26,24 @@ public class v1_16_R3 implements CompatibilityLayer {
                 .rayTrace(player.getEyeLocation(), player.getLocation().getDirection(), range, FluidCollisionMode.NEVER, true, DefaultConfig.HITBOX_INCREASE.asDouble(), entity ->
                         entity != player);
         if (result == null) {
-            return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), null, false);
+            return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), null, PlayerHitPart.NONE);
         }
 
         if (result.getHitBlock() != null) {
-            return new GunshellRayTraceResult(Optional.empty(), Optional.of(result.getHitBlock()), result.getHitBlockFace(), false);
+            return new GunshellRayTraceResult(Optional.empty(), Optional.of(result.getHitBlock()), result.getHitBlockFace(), PlayerHitPart.NONE);
         }
 
         if (result.getHitEntity() == null) {
-            return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), null, false);
+            return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), null, PlayerHitPart.NONE);
         }
 
         Entity entity = result.getHitEntity();
         if (!(entity instanceof LivingEntity) || entity instanceof ArmorStand) {
-            return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), null, false);
+            return new GunshellRayTraceResult(Optional.empty(), Optional.empty(), null, PlayerHitPart.NONE);
         }
         LivingEntity livingEntity = (LivingEntity) entity;
-        boolean isHeadshot = (result.getHitPosition().getY() - entity.getLocation().getY()) > 1.375
-                || (livingEntity instanceof Player && ((Player) livingEntity).isSneaking() && (result.getHitPosition().getY() - entity.getLocation().getY()) >  1.1);
-        return new GunshellRayTraceResult(Optional.of(livingEntity), Optional.empty(), null, isHeadshot);
+        PlayerHitPart playerHitPart = PlayerHitPart.resolve(result.getHitPosition().getY(), livingEntity, false);
+        return new GunshellRayTraceResult(Optional.of(livingEntity), Optional.empty(), null, playerHitPart);
     }
 
     @Override
