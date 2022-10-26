@@ -10,6 +10,8 @@ import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import com.jazzkuh.gunshell.compatibility.CompatibilityManager;
 import com.jazzkuh.gunshell.utils.PluginUtils;
 import com.jazzkuh.gunshell.utils.config.ConfigurationFile;
+import com.jazzkuh.gunshell.utils.license.LicenseVerification;
+import com.jazzkuh.gunshell.utils.license.PremiumResult;
 import de.slikey.effectlib.EffectManager;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,6 +22,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,6 +45,8 @@ public final class GunshellPlugin extends JavaPlugin {
     private @Getter @Setter Set<UUID> reloadingSet = new HashSet<>();
     private @Getter @Setter Set<Block> undoList = new HashSet<>();
     private @Getter @Setter HashMap<ArmorStand, Integer> activeThrowables = new HashMap<>();
+    private @Getter @Setter LicenseVerification licenseVerification;
+    private @Getter @Setter PremiumResult premiumResult;
 
     @Override
     public void onLoad() {
@@ -53,23 +58,28 @@ public final class GunshellPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         setInstance(this);
+
         setEffectManager(new EffectManager(this));
         setCompatibilityLayer(this.getCompatibilityManager().getCompatibilityLayer());
         new PluginUtils();
 
         this.getCompatibilityManager().enableExtensions();
 
+        DefaultConfig.init();
+        messages = new ConfigurationFile(this, "messages.yml", false);
+        MessagesConfig.init();
+        messages.saveConfig();
+
+        this.licenseVerification = new LicenseVerification(URI.create("http://157.90.91.123:6000/api/premium"), DefaultConfig.LICENSE_KEY.asString(), this.getDescription().getVersion(), "lesnmtubypejipnnlontopxjlbbkirdtafaueymxna");
+        this.premiumResult = licenseVerification.check();
+        this.premiumResult.checkStatus(this);
+        if (!premiumResult.isAuthenticated()) return;
+
         setWeaponRegistry(new WeaponRegistry(this));
         this.weaponRegistry.registerFireables("weapons", "builtin.yml");
         this.weaponRegistry.registerAmmunition("ammunition", "builtin.yml");
         this.weaponRegistry.registerThrowables("throwables", "builtin.yml");
         this.weaponRegistry.registerMelees("melee", "builtin.yml");
-
-        DefaultConfig.init();
-
-        messages = new ConfigurationFile(this, "messages.yml", false);
-        MessagesConfig.init();
-        messages.saveConfig();
 
         new GunshellCMD().register(this);
 
@@ -87,6 +97,11 @@ public final class GunshellPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
 
         this.getLogger().info(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " has been enabled!");
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+            this.premiumResult = licenseVerification.check();
+
+            Bukkit.getScheduler().runTask(GunshellPlugin.getInstance(), () -> this.premiumResult.checkStatus(this));
+        }, 10 * 60 * 20, 10 * 60 * 20);
     }
 
     @Override

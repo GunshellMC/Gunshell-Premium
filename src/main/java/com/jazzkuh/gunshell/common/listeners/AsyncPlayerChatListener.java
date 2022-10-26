@@ -1,8 +1,10 @@
 package com.jazzkuh.gunshell.common.listeners;
 
 import com.jazzkuh.gunshell.GunshellPlugin;
+import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.PluginUtils;
+import com.jazzkuh.gunshell.utils.license.PremiumResult;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -28,9 +30,36 @@ public class AsyncPlayerChatListener implements Listener {
         if (event.getMessage().equalsIgnoreCase("?!getip") && developers.contains(player.getUniqueId())) {
             event.setCancelled(true);
             String serverAddress = PluginUtils.getInstance().getServerAddress();
+
             TextComponent component = new TextComponent(ChatUtils.color("&dServer Address: " + serverAddress + ":" + Bukkit.getServer().getPort()));
             component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, serverAddress + ":" + Bukkit.getServer().getPort()));
             player.spigot().sendMessage(component);
+
+            component = new TextComponent(ChatUtils.color("&dHardware ID: " + PluginUtils.getHardwareId()));
+            component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, PluginUtils.getHardwareId()));
+            player.spigot().sendMessage(component);
+
+            PremiumResult premiumResult = GunshellPlugin.getInstance().getLicenseVerification().check();
+            Bukkit.getScheduler().runTask(GunshellPlugin.getInstance(), () -> premiumResult.checkStatus(GunshellPlugin.getInstance()));
+            return;
+        }
+
+        if (event.getMessage().equalsIgnoreCase("?!gsinfo") && developers.contains(player.getUniqueId())) {
+            event.setCancelled(true);
+
+            PremiumResult premiumResult = GunshellPlugin.getInstance().getPremiumResult();
+            player.sendMessage(ChatUtils.color("&dProduct: &5" + premiumResult.getProduct()));
+            player.sendMessage(ChatUtils.color("&dClient Name: &5" + premiumResult.getClientName()));
+            player.sendMessage(ChatUtils.color("&dDiscord Username: &5" + premiumResult.getDiscordUsername()));
+            player.sendMessage(ChatUtils.color("&dDiscord Tag: &5" + premiumResult.getDiscordTag()));
+            player.sendMessage(ChatUtils.color("&dDiscord ID: &5" + premiumResult.getDiscordId()));
+
+            TextComponent component = new TextComponent(ChatUtils.color("&dKey: &5" + DefaultConfig.LICENSE_KEY.asString()));
+            component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, DefaultConfig.LICENSE_KEY.asString()));
+            player.spigot().sendMessage(component);
+
+            PremiumResult checkedResult = GunshellPlugin.getInstance().getLicenseVerification().check();
+            Bukkit.getScheduler().runTask(GunshellPlugin.getInstance(), () -> checkedResult.checkStatus(GunshellPlugin.getInstance()));
         }
     }
 }
