@@ -37,7 +37,7 @@ public class PlayerItemHeldListener implements Listener {
             int durability = NBTEditor.getInt(itemStack, "gunshell_weapon_durability");
 
             MessagesConfig.SHOW_AMMO_DURABILITY.get(player,
-                    new PlaceHolder("Durability", String.valueOf(durability)),
+                    new PlaceHolder("Durability", durability == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : String.valueOf(durability)),
                     new PlaceHolder("Ammo", String.valueOf(ammo)),
                     new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
         } else if (NBTEditor.contains(itemStack, "gunshell_melee_key")) {
@@ -48,7 +48,7 @@ public class PlayerItemHeldListener implements Listener {
 
             int durability = NBTEditor.getInt(itemStack, "gunshell_melee_durability");
             MessagesConfig.SHOW_DURABILITY.get(player,
-                    new PlaceHolder("Durability", String.valueOf(durability)));
+                    new PlaceHolder("Durability", durability == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : String.valueOf(durability)));
         }
     }
 }

@@ -57,7 +57,7 @@ public class FireablePreFireListener implements Listener {
         int ammo = NBTEditor.getInt(itemStack, GUN_AMMO_KEY);
         int durability = NBTEditor.getInt(itemStack, DURABILITY_KEY);
 
-        if (durability <= 0 && durability != -1) {
+        if (durability != -1 && durability <= 0) {
             player.getInventory().removeItem(itemStack);
             return;
         }
@@ -169,7 +169,7 @@ public class FireablePreFireListener implements Listener {
             MessagesConfig.BULLET_SHOT_LAST.get(player);
         }
 
-        if (NBTEditor.getInt(itemStack, DURABILITY_KEY) <= 0) {
+        if (durability != -1 && NBTEditor.getInt(itemStack, DURABILITY_KEY) <= 0) {
             player.getInventory().removeItem(itemStack);
         }
 

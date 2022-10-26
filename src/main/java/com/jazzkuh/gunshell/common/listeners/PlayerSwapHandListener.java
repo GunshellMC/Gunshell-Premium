@@ -41,7 +41,7 @@ public class PlayerSwapHandListener implements Listener {
         int ammo = NBTEditor.getInt(itemStack, GUN_AMMO_KEY);
         int durability = NBTEditor.getInt(itemStack, DURABILITY_KEY);
 
-        if (durability <= 0) {
+        if (durability != -1 && durability <= 0) {
             player.getInventory().removeItem(itemStack);
             return;
         }
@@ -79,7 +79,7 @@ public class PlayerSwapHandListener implements Listener {
                 fireable.updateItemMeta(itemStack, finalAmmoAmount);
 
                 MessagesConfig.SHOW_AMMO_DURABILITY.get(player,
-                        new PlaceHolder("Durability", String.valueOf(durability)),
+                        new PlaceHolder("Durability", durability == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : String.valueOf(NBTEditor.getInt(itemStack, DURABILITY_KEY))),
                         new PlaceHolder("Ammo", String.valueOf(finalAmmoAmount)),
                         new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
 

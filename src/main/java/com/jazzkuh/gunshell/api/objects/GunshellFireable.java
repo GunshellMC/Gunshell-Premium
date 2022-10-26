@@ -2,6 +2,7 @@ package com.jazzkuh.gunshell.api.objects;
 
 import com.jazzkuh.gunshell.api.interfaces.GunshellWeaponImpl;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
+import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.ItemBuilder;
 import com.jazzkuh.gunshell.utils.PluginUtils;
@@ -94,7 +95,7 @@ public class GunshellFireable implements GunshellWeaponImpl {
                         new PlaceHolder("Ammo", String.valueOf(this.getMaxAmmo())),
                         new PlaceHolder("MaxAmmo", String.valueOf(this.getMaxAmmo())),
                         new PlaceHolder("Damage", String.valueOf(this.getDamage())),
-                        new PlaceHolder("Durability", String.valueOf(durability))))
+                        new PlaceHolder("Durability", String.valueOf(durability == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : durability))))
                 .setNBT("gunshell_weapon_key", key)
                 .setNBT("gunshell_weapon_ammo", this.getMaxAmmo())
                 .setNBT("gunshell_weapon_durability", durability)
@@ -115,7 +116,7 @@ public class GunshellFireable implements GunshellWeaponImpl {
                 new PlaceHolder("Ammo", String.valueOf(ammo)),
                 new PlaceHolder("MaxAmmo", String.valueOf(this.getMaxAmmo())),
                 new PlaceHolder("Damage", String.valueOf(this.getDamage())),
-                new PlaceHolder("Durability", String.valueOf(NBTEditor.getInt(itemStack, "gunshell_weapon_durability")))));
+                new PlaceHolder("Durability", String.valueOf(NBTEditor.getInt(itemStack, "gunshell_weapon_durability") == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : NBTEditor.getInt(itemStack, "gunshell_weapon_durability")))));
         itemStack.setItemMeta(itemMeta);
     }
 

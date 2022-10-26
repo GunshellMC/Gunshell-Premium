@@ -86,13 +86,13 @@ public class GunshellCMD extends AbstractCommand {
         }
     }
 
-    @Subcommand(name = "getweapon", usage = "<weaponType> <durability> [player]", permission = true,
+    @Subcommand(name = "getweapon", usage = "<weaponType> [durability] [player]", permission = true,
             aliases = "get|weapon", description = "Get a weapon from the config.")
     public void onGetWeapon(CommandInvocation commandInvocation) {
         String[] args = commandInvocation.getArguments();
         CommandSender sender = commandInvocation.getCommandSender();
 
-        if (args.length < 3) {
+        if (args.length < 2) {
             this.sendNotEnoughArguments(commandInvocation);
             return;
         }
@@ -103,12 +103,12 @@ public class GunshellCMD extends AbstractCommand {
             return;
         }
 
-        if (!PluginUtils.getInstance().isValidInteger(args[2])) {
+        if (args.length > 2 && !PluginUtils.getInstance().isValidInteger(args[2])) {
             MessagesConfig.ERROR_INVALID_INTEGER.get(sender);
             return;
         }
 
-        int durability = Integer.parseInt(args[2]);
+        int durability = args.length == 3 ? Integer.parseInt(args[2]) : -1;
 
         GunshellFireable fireable = GunshellPlugin.getInstance().getWeaponRegistry().getWeapons().get(weaponKey);
 
@@ -213,7 +213,7 @@ public class GunshellCMD extends AbstractCommand {
         String[] args = commandInvocation.getArguments();
         CommandSender sender = commandInvocation.getCommandSender();
 
-        if (args.length < 3) {
+        if (args.length < 2) {
             this.sendNotEnoughArguments(commandInvocation);
             return;
         }
@@ -224,12 +224,12 @@ public class GunshellCMD extends AbstractCommand {
             return;
         }
 
-        if (!PluginUtils.getInstance().isValidInteger(args[2])) {
+        if (args.length > 2 && !PluginUtils.getInstance().isValidInteger(args[2])) {
             MessagesConfig.ERROR_INVALID_INTEGER.get(sender);
             return;
         }
 
-        int durability = Integer.parseInt(args[2]);
+        int durability = args.length == 3 ? Integer.parseInt(args[2]) : -1;
 
         GunshellMelee melee = GunshellPlugin.getInstance().getWeaponRegistry().getMelees().get(meleeKey);
 

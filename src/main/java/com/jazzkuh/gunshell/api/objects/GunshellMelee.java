@@ -2,6 +2,7 @@ package com.jazzkuh.gunshell.api.objects;
 
 import com.jazzkuh.gunshell.api.enums.BuiltinMeleeActionType;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
+import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
 import com.jazzkuh.gunshell.utils.ChatUtils;
 import com.jazzkuh.gunshell.utils.ItemBuilder;
 import com.jazzkuh.gunshell.utils.PluginUtils;
@@ -55,7 +56,7 @@ public class GunshellMelee {
                 .setName(name)
                 .setLore(ChatUtils.color(lore,
                         new PlaceHolder("Damage", String.valueOf(this.getDamage())),
-                        new PlaceHolder("Durability", String.valueOf(durability))))
+                        new PlaceHolder("Durability", String.valueOf(durability == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : durability))))
                 .setNBT("gunshell_melee_key", key)
                 .setNBT("gunshell_melee_durability", durability)
                 .setAttackSpeed(attackSpeed)
@@ -73,7 +74,7 @@ public class GunshellMelee {
         List<String> lore = this.getLore();
         itemMeta.setLore(ChatUtils.color(lore,
                 new PlaceHolder("Damage", String.valueOf(this.getDamage())),
-                new PlaceHolder("Durability", String.valueOf(NBTEditor.getInt(itemStack, "gunshell_melee_durability")))));
+                new PlaceHolder("Durability", String.valueOf(NBTEditor.getInt(itemStack, "gunshell_melee_durability") == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : NBTEditor.getInt(itemStack, "gunshell_melee_durability")))));
         itemStack.setItemMeta(itemMeta);
     }
 

@@ -181,7 +181,7 @@ public abstract class AbstractCommand implements TabExecutor {
         for (CommandArgument commandArgument : this.commandArguments) {
             if (commandArgument.getPermission() == null || commandInvocation.getCommandSender().hasPermission(commandArgument.getPermission())) {
                 String usage = commandArgument.getArguments();
-                commandInvocation.getCommandSender().sendMessage(ChatUtils.color("&6/" + commandInvocation.getCommand().getName() + " &7" + usage + "&8 - &7" + commandArgument.getDescription()));
+                commandInvocation.getCommandSender().sendMessage(ChatUtils.color("&5/" + commandInvocation.getCommand().getName() + " &7" + usage + "&8 - &7" + commandArgument.getDescription()));
             }
         }
     }

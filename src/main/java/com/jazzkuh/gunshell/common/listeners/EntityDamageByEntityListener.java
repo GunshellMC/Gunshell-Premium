@@ -66,7 +66,7 @@ public class EntityDamageByEntityListener implements Listener {
 
         int durability = NBTEditor.getInt(itemStack, DURABILITY_KEY);
 
-        if (durability <= 0) {
+        if (durability != -1 && durability <= 0) {
             player.getInventory().removeItem(itemStack);
             return;
         }
@@ -78,11 +78,11 @@ public class EntityDamageByEntityListener implements Listener {
         if (meleeDamageEvent.isCancelled()) return;
 
         GunshellPlugin.getInstance().getMeleeCooldownMap().put(cooldownKey, System.currentTimeMillis());
-        PluginUtils.getInstance().applyNBTTag(itemStack, DURABILITY_KEY, durability - 1);
+        if (durability != -1) PluginUtils.getInstance().applyNBTTag(itemStack, DURABILITY_KEY, durability - 1);
         melee.updateItemMeta(itemStack);
 
         MessagesConfig.SHOW_DURABILITY.get(player,
-                new PlaceHolder("Durability", String.valueOf(NBTEditor.getInt(itemStack, DURABILITY_KEY))));
+                new PlaceHolder("Durability", durability == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : String.valueOf(NBTEditor.getInt(itemStack, DURABILITY_KEY))));
 
         MeleeActionImpl meleeAction = MeleeActionRegistry.getAction(melee, melee.getActionType());
         if (meleeAction == null) {
