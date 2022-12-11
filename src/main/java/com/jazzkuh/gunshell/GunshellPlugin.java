@@ -23,10 +23,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.net.URI;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public final class GunshellPlugin extends JavaPlugin {
 
@@ -44,6 +41,7 @@ public final class GunshellPlugin extends JavaPlugin {
     private @Getter @Setter HashMap<UUID, PlayerTempModification> modifiedPlayerMap = new HashMap<>();
     private @Getter @Setter Set<UUID> reloadingSet = new HashSet<>();
     private @Getter @Setter Set<Block> undoList = new HashSet<>();
+    private @Getter @Setter Map<Block, Material> replacedBlockMap = new HashMap<>();
     private @Getter @Setter HashMap<ArmorStand, Integer> activeThrowables = new HashMap<>();
     private @Getter @Setter LicenseVerification licenseVerification;
     private @Getter @Setter PremiumResult premiumResult;
@@ -115,6 +113,8 @@ public final class GunshellPlugin extends JavaPlugin {
         for (Block block : this.undoList) {
             block.setType(Material.AIR);
         }
+
+        this.replacedBlockMap.forEach(Block::setType);
 
         this.getLogger().info(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " has been disabled!");
     }

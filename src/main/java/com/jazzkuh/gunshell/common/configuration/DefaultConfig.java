@@ -3,6 +3,7 @@ package com.jazzkuh.gunshell.common.configuration;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import lombok.Getter;
 import org.bukkit.Location;
+import org.bukkit.Material;
 
 import java.util.List;
 
@@ -13,7 +14,10 @@ public enum DefaultConfig {
     PROTECTION_DAMAGE_REDUCTION_ENABLED("protection-damage-reduction.enabled", true),
     PROTECTION_DAMAGE_REDUCTION_AMOUNT("protection-damage-reduction.amount", 5),
 
-    LICENSE_KEY("premium.license-key", "Enter your license key");
+    LICENSE_KEY("premium.license-key", "Enter your license key"),
+    BLOCK_BREAKING_ENABLED("premium.block-breaking.enabled", true),
+    BLOCK_BREAKING_WHITELIST("premium.block-breaking.whitelist", List.of("GLASS", "PINK_STAINED_GLASS")),
+    BLOCK_BREAKING_DELAY("premium.block-breaking.delay", 60);
 
     private final @Getter String path;
     private final @Getter Object value;

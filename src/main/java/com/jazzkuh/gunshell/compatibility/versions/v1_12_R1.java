@@ -423,10 +423,4 @@ public class v1_12_R1 implements CompatibilityLayer {
     public boolean isPassable(Block block) {
         return block.isEmpty();
     }
-
-    @Override
-    public void displayDestroyStage(Block block, int stage) {
-        PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(ThreadLocalRandom.current().nextInt(2000), new BlockPosition(block.getX(), block.getY(), block.getZ()), stage);
-        Bukkit.getOnlinePlayers().forEach(player -> ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet));
-    }
 }

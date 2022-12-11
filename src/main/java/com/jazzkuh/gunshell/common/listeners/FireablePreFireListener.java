@@ -20,6 +20,7 @@ import de.slikey.effectlib.effect.ParticleEffect;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -204,6 +205,18 @@ public class FireablePreFireListener implements Listener {
             if (rayTraceResult.getOptionalBlock().isPresent()) {
                 Block block = rayTraceResult.getOptionalBlock().get();
                 block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType());
+
+                if (DefaultConfig.BLOCK_BREAKING_ENABLED.asBoolean() && DefaultConfig.BLOCK_BREAKING_WHITELIST.asList().contains(block.getType().name())) {
+                    GunshellPlugin.getInstance().getReplacedBlockMap().put(block, block.getType());
+                    block.setType(Material.AIR);
+
+                    Bukkit.getScheduler().runTaskLater(GunshellPlugin.getInstance(), () -> {
+                        if (GunshellPlugin.getInstance().getReplacedBlockMap().containsKey(block)) {
+                            block.setType(GunshellPlugin.getInstance().getReplacedBlockMap().get(block));
+                            GunshellPlugin.getInstance().getReplacedBlockMap().remove(block);
+                        }
+                    }, DefaultConfig.BLOCK_BREAKING_DELAY.asInteger());
+                }
             }
 
             ammunitionAction.fireAction(player, rayTraceResult, ammunition.getConfiguration());

@@ -12,6 +12,5 @@ public interface CompatibilityLayer {
     void showEndCreditScene(Player player);
     void showDemoMenu(Player player);
     void sendPumpkinEffect(Player player, boolean forRemoval);
-    void displayDestroyStage(Block block, int stage);
     boolean isPassable(Block block);
 }
