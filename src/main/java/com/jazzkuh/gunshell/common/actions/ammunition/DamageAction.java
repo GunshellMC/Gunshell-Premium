@@ -1,5 +1,6 @@
 package com.jazzkuh.gunshell.common.actions.ammunition;
 
+import com.cryptomorin.xseries.XPotion;
 import com.jazzkuh.gunshell.GunshellPlugin;
 import com.jazzkuh.gunshell.api.enums.PlayerHitPart;
 import com.jazzkuh.gunshell.api.objects.GunshellAmmunition;
@@ -19,6 +20,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.codemc.worldguardwrapper.flag.WrappedState;
 
 import java.util.List;
@@ -70,6 +73,13 @@ public class DamageAction extends AbstractAmmunitionAction {
                 damage += Integer.parseInt(action.split(":")[1]);
             } else if (action.toUpperCase().startsWith("POTION")) {
                 String[] potionInfo = action.split(":");
+                XPotion.matchXPotion(potionInfo[1]).ifPresent(potion -> {
+                    int level = Integer.parseInt(potionInfo[2]);
+                    int duration = Integer.parseInt(potionInfo[3]);
+
+                    if (potion.getPotionEffectType() == null) return;
+                    player.addPotionEffect(new PotionEffect(potion.getPotionEffectType(), duration, level));
+                });
             }
         }
 
