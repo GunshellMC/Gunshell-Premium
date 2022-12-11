@@ -5,8 +5,11 @@ import com.jazzkuh.gunshell.api.enums.PlayerHitPart;
 import com.jazzkuh.gunshell.api.objects.GunshellRayTraceResult;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
+import net.minecraft.core.BlockPosition;
+import net.minecraft.network.protocol.game.PacketPlayOutBlockBreakAnimation;
 import net.minecraft.network.protocol.game.PacketPlayOutGameStateChange;
 import net.minecraft.network.protocol.game.PacketPlayOutSetSlot;
+import org.bukkit.Bukkit;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
@@ -19,6 +22,7 @@ import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class v1_18_R2 implements CompatibilityLayer {
     @Override
@@ -81,5 +85,11 @@ public class v1_18_R2 implements CompatibilityLayer {
     @Override
     public boolean isPassable(Block block) {
         return block.isPassable();
+    }
+
+    @Override
+    public void displayDestroyStage(Block block, int stage) {
+        PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(ThreadLocalRandom.current().nextInt(2000), new BlockPosition(block.getX(), block.getY(), block.getZ()), stage);
+        Bukkit.getOnlinePlayers().forEach(player -> ((CraftPlayer) player).getHandle().b.a(packet));
     }
 }

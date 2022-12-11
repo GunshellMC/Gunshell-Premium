@@ -8,6 +8,7 @@ import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import com.jazzkuh.gunshell.compatibility.CompatibilityLayer;
 import net.minecraft.server.v1_12_R1.*;
 import org.apache.commons.lang.Validate;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -28,6 +29,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
 
 public class v1_12_R1 implements CompatibilityLayer {
@@ -420,5 +422,11 @@ public class v1_12_R1 implements CompatibilityLayer {
     @Override
     public boolean isPassable(Block block) {
         return block.isEmpty();
+    }
+
+    @Override
+    public void displayDestroyStage(Block block, int stage) {
+        PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(ThreadLocalRandom.current().nextInt(2000), new BlockPosition(block.getX(), block.getY(), block.getZ()), stage);
+        Bukkit.getOnlinePlayers().forEach(player -> ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet));
     }
 }
