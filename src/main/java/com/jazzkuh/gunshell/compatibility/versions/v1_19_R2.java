@@ -90,6 +90,6 @@ public class v1_19_R2 implements CompatibilityLayer {
     @Override
     public void displayDestroyStage(Block block, int stage) {
         PacketPlayOutBlockBreakAnimation packet = new PacketPlayOutBlockBreakAnimation(ThreadLocalRandom.current().nextInt(2000), new BlockPosition(block.getX(), block.getY(), block.getZ()), stage);
-        Bukkit.getOnlinePlayers().forEach(player -> ((org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer) player).getHandle().b.a(packet));
+        Bukkit.getOnlinePlayers().forEach(player -> ((CraftPlayer) player).getHandle().b.a(packet));
     }
 }
