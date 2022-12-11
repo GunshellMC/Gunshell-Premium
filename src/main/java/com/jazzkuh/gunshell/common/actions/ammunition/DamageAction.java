@@ -21,6 +21,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.codemc.worldguardwrapper.flag.WrappedState;
 
+import java.util.List;
+
 public class DamageAction extends AbstractAmmunitionAction {
     public DamageAction(GunshellFireable fireable, GunshellAmmunition ammunition) {
         super(fireable, ammunition);
@@ -61,15 +63,22 @@ public class DamageAction extends AbstractAmmunitionAction {
         MessagesConfig.BULLET_HIT_OTHER.get(player,
                 new PlaceHolder("Name", livingEntity.getName()));
 
-        double damage = this.getFireable().getDamage();
+        double damage = 0;
+        List<String> actions = this.getFireable().getActions().get(rayTraceResult.getPlayerHitPart());
+        for (String action : actions) {
+            if (action.toUpperCase().startsWith("DAMAGE")) {
+                damage += Integer.parseInt(action.split(":")[1]);
+            } else if (action.toUpperCase().startsWith("POTION")) {
+                String[] potionInfo = action.split(":");
+            }
+        }
+
         if (rayTraceResult.getPlayerHitPart() == PlayerHitPart.HEAD) {
-            damage = this.getFireable().getHeadshotDamage();
             MessagesConfig.BULLET_HIT_OTHER_HEADSHOT.get(player,
                     new PlaceHolder("Name", livingEntity.getName()));
         }
 
         damage = PluginUtils.getInstance().applyProtectionModifier(damage, rayTraceResult.getPlayerHitPart() == PlayerHitPart.HEAD, livingEntity);
-
         PluginUtils.getInstance().performRecoil(livingEntity, 0F, this.getFireable().getKnockbackAmount());
 
         if (damage > livingEntity.getHealth()) {

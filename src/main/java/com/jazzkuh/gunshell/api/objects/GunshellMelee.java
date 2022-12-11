@@ -29,10 +29,11 @@ public class GunshellMelee {
     private final @Getter String nbtKey;
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
-    private @Getter @Setter double damage;
     private final @Getter double cooldown;
     private final @Getter double grabCooldown;
     private @Getter @Setter String actionType;
+
+    private final @Getter List<String> actions;
 
     public GunshellMelee(@NotNull String key, @NotNull ConfigurationSection configuration) {
         this.key = key;
@@ -45,17 +46,18 @@ public class GunshellMelee {
         this.nbtKey = configuration.getString("nbt.key");
         this.nbtValue = configuration.getString("nbt.value");
         this.customModelData = configuration.getInt("customModelData", 0);
-        this.damage = configuration.getDouble("damage", 5);
         this.cooldown = configuration.getDouble("cooldown", 1) * 1000; // convert to milliseconds
         this.grabCooldown = configuration.getDouble("grabCooldown", 1);
         this.actionType = configuration.getString("actionType", BuiltinMeleeActionType.DAMAGE.toString()).toUpperCase();
+
+        this.actions = configuration.getStringList("actions");
     }
+
     public ItemBuilder getItem(int durability) {
         double attackSpeed = -4 + 1 / this.getGrabCooldown();
         ItemBuilder itemBuilder = new ItemBuilder(material)
                 .setName(name)
                 .setLore(ChatUtils.color(lore,
-                        new PlaceHolder("Damage", String.valueOf(this.getDamage())),
                         new PlaceHolder("Durability", String.valueOf(durability == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : durability))))
                 .setNBT("gunshell_melee_key", key)
                 .setNBT("gunshell_melee_durability", durability)
@@ -73,7 +75,6 @@ public class GunshellMelee {
 
         List<String> lore = this.getLore();
         itemMeta.setLore(ChatUtils.color(lore,
-                new PlaceHolder("Damage", String.valueOf(this.getDamage())),
                 new PlaceHolder("Durability", String.valueOf(NBTEditor.getInt(itemStack, "gunshell_melee_durability") == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : NBTEditor.getInt(itemStack, "gunshell_melee_durability")))));
         itemStack.setItemMeta(itemMeta);
     }

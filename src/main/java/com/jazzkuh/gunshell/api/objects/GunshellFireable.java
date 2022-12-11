@@ -1,5 +1,6 @@
 package com.jazzkuh.gunshell.api.objects;
 
+import com.jazzkuh.gunshell.api.enums.PlayerHitPart;
 import com.jazzkuh.gunshell.api.interfaces.GunshellWeaponImpl;
 import com.jazzkuh.gunshell.common.configuration.PlaceHolder;
 import com.jazzkuh.gunshell.common.configuration.lang.MessagesConfig;
@@ -16,7 +17,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GunshellFireable implements GunshellWeaponImpl {
     private final @NotNull @Getter String key;
@@ -29,8 +32,6 @@ public class GunshellFireable implements GunshellWeaponImpl {
     private final @Getter String nbtKey;
     private final @Getter String nbtValue;
     private final @Getter int customModelData;
-    private @Getter @Setter int damage;
-    private @Getter @Setter int headshotDamage;
     private @Getter @Setter int range;
     private final @Getter int minimumRange;
     private final @Getter double cooldown;
@@ -52,6 +53,8 @@ public class GunshellFireable implements GunshellWeaponImpl {
     private @Getter @Setter int rayTraces;
     private @Getter @Setter double spread;
 
+    private final @Getter Map<PlayerHitPart, List<String>> actions = new HashMap<>();
+
     public GunshellFireable(@NotNull String key, @NotNull ConfigurationSection configuration) {
         this.key = key;
         this.configuration = configuration;
@@ -63,8 +66,6 @@ public class GunshellFireable implements GunshellWeaponImpl {
         this.nbtKey = configuration.getString("nbt.key");
         this.nbtValue = configuration.getString("nbt.value");
         this.customModelData = configuration.getInt("customModelData", 0);
-        this.damage = configuration.getInt("damage", 5);
-        this.headshotDamage = configuration.getInt("headshotDamage", this.damage);
         this.range = configuration.getInt("range", 10);
         this.minimumRange = configuration.getInt("minimumRange", 0);
         this.cooldown = configuration.getDouble("cooldown", 1) * 1000; // convert to milliseconds
@@ -85,6 +86,11 @@ public class GunshellFireable implements GunshellWeaponImpl {
         this.scopeAmplifier = configuration.getInt("scope.amplifier", 8);
         this.rayTraces = configuration.getInt("rayTraces", 1);
         this.spread = configuration.getDouble("spread", 0);
+
+        this.actions.put(PlayerHitPart.HEAD, configuration.getStringList("bodyParts.head"));
+        this.actions.put(PlayerHitPart.TORSO, configuration.getStringList("bodyParts.torso"));
+        this.actions.put(PlayerHitPart.LEGS, configuration.getStringList("bodyParts.legs"));
+        this.actions.put(PlayerHitPart.ALL, configuration.getStringList("bodyParts.torso"));
     }
     @Override
     public ItemBuilder getItem(int durability) {
@@ -94,7 +100,6 @@ public class GunshellFireable implements GunshellWeaponImpl {
                 .setLore(ChatUtils.color(lore,
                         new PlaceHolder("Ammo", String.valueOf(this.getMaxAmmo())),
                         new PlaceHolder("MaxAmmo", String.valueOf(this.getMaxAmmo())),
-                        new PlaceHolder("Damage", String.valueOf(this.getDamage())),
                         new PlaceHolder("Durability", String.valueOf(durability == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : durability))))
                 .setNBT("gunshell_weapon_key", key)
                 .setNBT("gunshell_weapon_ammo", this.getMaxAmmo())
@@ -115,7 +120,6 @@ public class GunshellFireable implements GunshellWeaponImpl {
         itemMeta.setLore(ChatUtils.color(lore,
                 new PlaceHolder("Ammo", String.valueOf(ammo)),
                 new PlaceHolder("MaxAmmo", String.valueOf(this.getMaxAmmo())),
-                new PlaceHolder("Damage", String.valueOf(this.getDamage())),
                 new PlaceHolder("Durability", String.valueOf(NBTEditor.getInt(itemStack, "gunshell_weapon_durability") == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : NBTEditor.getInt(itemStack, "gunshell_weapon_durability")))));
         itemStack.setItemMeta(itemMeta);
     }

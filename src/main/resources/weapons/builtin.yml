@@ -9,8 +9,14 @@ revolver:
   nbt:
     key: mtcustom
     value: revolver_fullmodel
-  damage: 8
-  headshotDamage: 13
+  bodyParts:
+    head:
+      - 'DAMAGE:13'
+    torso:
+      - 'DAMAGE:8'
+    legs:
+      - 'DAMAGE:8'
+      - 'POTION:SLOWNESS:1:10'
   range: 16
   cooldown: 1
   grabCooldown: 0.7

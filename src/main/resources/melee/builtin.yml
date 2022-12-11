@@ -8,7 +8,8 @@ karambit:
     nbt:
       key: "mtcustom"
       value: "knife1"
-    damage: 6
+    actions:
+      - "DAMAGE:6"
     cooldown: 1
     grabCooldown: 1
     actionType: DAMAGE
