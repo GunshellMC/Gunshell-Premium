@@ -44,8 +44,6 @@ public class MeleeDamageAction extends AbstractMeleeAction {
                     Effect.STEP_SOUND, Material.REDSTONE_BLOCK);
         }
 
-
-
         double damage = 0;
         List<String> actions = this.getMelee().getActions();
         for (String action : actions) {
@@ -54,11 +52,11 @@ public class MeleeDamageAction extends AbstractMeleeAction {
             } else if (action.toUpperCase().startsWith("POTION")) {
                 String[] potionInfo = action.split(":");
                 XPotion.matchXPotion(potionInfo[1]).ifPresent(potion -> {
-                    int level = Integer.parseInt(potionInfo[2]);
+                    int level = Integer.parseInt(potionInfo[2]) - 1;
                     int duration = Integer.parseInt(potionInfo[3]);
 
                     if (potion.getPotionEffectType() == null) return;
-                    player.addPotionEffect(new PotionEffect(potion.getPotionEffectType(), duration, level));
+                    entity.addPotionEffect(new PotionEffect(potion.getPotionEffectType(), duration * 20, level));
                 });
             }
         }
