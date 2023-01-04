@@ -23,10 +23,7 @@ public class PremiumResult {
     private String discordId = null;
 
     public void checkStatus(GunshellPlugin plugin) {
-        if (isAuthenticated()) {
-            Bukkit.getLogger().info("[Gunshell-Premium] License is valid! Enjoy Gunshell!");
-            return;
-        }
+        if (isAuthenticated()) return;
 
         Bukkit.getLogger().severe("[Gunshell-Premium] License is invalid! Given reason: " + this.statusMsg + "!");
         Bukkit.getLogger().severe("[Gunshell-Premium] Plugin has been disabled.");

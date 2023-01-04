@@ -12,6 +12,7 @@ import com.jazzkuh.gunshell.utils.PluginUtils;
 import com.jazzkuh.gunshell.utils.command.AbstractCommand;
 import com.jazzkuh.gunshell.utils.command.CommandInvocation;
 import com.jazzkuh.gunshell.utils.command.Subcommand;
+import com.jazzkuh.gunshell.utils.license.PremiumResult;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -38,8 +39,11 @@ public class GunshellCMD extends AbstractCommand {
     }
 
     private void sendDefaultMessage(CommandSender sender) {
+        PremiumResult result = GunshellPlugin.getInstance().getPremiumResult();
+
         ChatUtils.sendMessage(sender, "&8 ----------------------------------------------");
-        ChatUtils.sendMessage(sender, "&8| &dThis server is using " + GunshellPlugin.getInstance().getDescription().getName() + " &5v" + GunshellPlugin.getInstance().getDescription().getVersion() + "&d.");
+        ChatUtils.sendMessage(sender, "&8| &dThis server is using " + GunshellPlugin.getInstance().getDescription().getName() + " &5v" + GunshellPlugin.getInstance().getDescription().getVersion() + "&d purchased by &5" + result.getDiscordUsername() + "#" + result.getDiscordTag() + " (" + result.getDiscordId() + ")&d.");
+        ChatUtils.sendMessage(sender, "&8| &dThis server " + (result.getProduct().equals("gunshell_premium_commercial") ? "is" : "is &5not&d") + " allowed to sell weapons.");
         ChatUtils.sendMessage(sender, "&8| &5Description: &d" + GunshellPlugin.getInstance().getDescription().getDescription());
         ChatUtils.sendMessage(sender, "&8| &5Download: &d" + GunshellPlugin.getInstance().getDescription().getWebsite());
         ChatUtils.sendMessage(sender, "&8| &5Authors: &d" + StringUtils.join(GunshellPlugin.getInstance().getDescription().getAuthors(), ", "));

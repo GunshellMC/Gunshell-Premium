@@ -72,6 +72,7 @@ public final class GunshellPlugin extends JavaPlugin {
         this.premiumResult = licenseVerification.check();
         this.premiumResult.checkStatus(this);
         if (!premiumResult.isAuthenticated()) return;
+        this.getLogger().info("License is valid! Enjoy Gunshell!");
 
         setWeaponRegistry(new WeaponRegistry(this));
         this.weaponRegistry.registerFireables("weapons", "builtin.yml");
