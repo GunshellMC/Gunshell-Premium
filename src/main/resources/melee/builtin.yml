@@ -1,20 +1,5 @@
 karambit:
-    name: "&9Karambit"
-    lore:
-      - '&6Officieel Minetopia Wapen.'
-      - ''
-      - '&7Durability: &f<Durability>'
-    material: GOLD_SWORD
-    nbt:
-      key: "mtcustom"
-      value: "knife1"
-    actions:
-      - "DAMAGE:6"
-    cooldown: 1
-    grabCooldown: 1
-    actionType: DAMAGE
-lama_pickaxe:
-  name: "&9Lama Pickaxe"
+  name: "&9Karambit"
   lore:
     - '&6Officieel Minetopia Wapen.'
     - ''
@@ -22,50 +7,70 @@ lama_pickaxe:
   material: GOLD_SWORD
   nbt:
     key: "mtcustom"
-    value: "lama_pickaxe"
-  damage: 5
+    value: "knife1"
+  actions:
+    - "DAMAGE:6"
+    - "POTION:SLOWNESS:1:10"
+  cooldown: 1
+  grabCooldown: 1
+  actionType: DAMAGE
+lama_pickaxe:
+  name: '&9Lama Pickaxe'
+  lore:
+    - '&6Officieel Minetopia Wapen.'
+    - ''
+    - '&7Durability: &f<Durability>'
+  material: GOLD_SWORD
+  nbt:
+    key: mtcustom
+    value: lama_pickaxe
+    actions:
+      - "DAMAGE:5"
   cooldown: 1
   grabCooldown: 1
   actionType: DAMAGE
 knuppel_birch:
-  name: "&9Knuppel Birch"
+  name: '&9Knuppel Birch'
   lore:
     - '&6Officieel Minetopia Wapen.'
     - ''
     - '&7Durability: &f<Durability>'
   material: FERMENTED_SPIDER_EYE
   nbt:
-    key: "mtcustom"
-    value: "knuppel_birch"
-  damage: 6
+    key: mtcustom
+    value: knuppel_birch
+    actions:
+      - "DAMAGE:6"
   cooldown: 1
   grabCooldown: 1
   actionType: DAMAGE
 zakmes:
-  name: "&9Zakmes"
+  name: '&9Zakmes'
   lore:
     - '&6Officieel Minetopia Wapen.'
     - ''
     - '&7Durability: &f<Durability>'
   material: WOODEN_SWORD
   nbt:
-    key: "mtcustom"
-    value: "zakmes"
-  damage: 5
+    key: mtcustom
+    value: zakmes
+    actions:
+      - "DAMAGE:5"
   cooldown: 1
   grabCooldown: 1
   actionType: DAMAGE
 boksbeugel:
-  name: "&9Boksbeugel"
+  name: '&9Boksbeugel'
   lore:
     - '&6Officieel Minetopia Wapen.'
     - ''
     - '&7Durability: &f<Durability>'
   material: WOODEN_SWORD
   nbt:
-    key: "mtcustom"
-    value: "boksbeugel"
-  damage: 4
+    key: mtcustom
+    value: boksbeugel
+    actions:
+      - "DAMAGE:4"
   cooldown: 1
   grabCooldown: 1
   actionType: DAMAGE

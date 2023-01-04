@@ -41,8 +41,14 @@ deserteagle:
   nbt:
     key: mtcustom
     value: deserteagle_fullmodel
-  damage: 8
-  headshotDamage: 16
+  bodyParts:
+    head:
+      - 'DAMAGE:16'
+    torso:
+      - 'DAMAGE:8'
+    legs:
+      - 'DAMAGE:8'
+      - 'POTION:SLOWNESS:1:10'
   range: 16
   cooldown: 1
   grabCooldown: 0.7
@@ -67,8 +73,14 @@ magnum44:
   nbt:
     key: mtcustom
     value: magnum44_fullmodel
-  damage: 2.5
-  headshotDamage: 6
+  bodyParts:
+    head:
+      - 'DAMAGE:6'
+    torso:
+      - 'DAMAGE:2.5'
+    legs:
+      - 'DAMAGE:2.5'
+      - 'POTION:SLOWNESS:1:10'
   range: 30
   cooldown: 1
   grabCooldown: 0.7
@@ -82,6 +94,7 @@ magnum44:
   recoilAmount: 2.0
   knockbackAmount: 0.4
   selfKnockbackAmount: 0.2
+  waltherp99:
 waltherp99:
   name: '&8Walther P99'
   lore:
@@ -93,8 +106,14 @@ waltherp99:
   nbt:
     key: mtcustom
     value: waltherp99_fullmodel
-  damage: 3
-  headshotDamage: 6
+  bodyParts:
+    head:
+      - 'DAMAGE:6'
+    torso:
+      - 'DAMAGE:3'
+    legs:
+      - 'DAMAGE:3'
+      - 'POTION:SLOWNESS:1:10'
   range: 30
   cooldown: 1
   grabCooldown: 0.7
@@ -102,32 +121,6 @@ waltherp99:
   maxAmmo: 10
   ammunitionKeys:
     - waltherp99_ammo
-  sound: minetopia.gunshothard
-  reloadSound: minetopia.gunreloadhard
-  emptySound: minetopia.gunempty
-  recoilAmount: 2.0
-  knockbackAmount: 0.4
-  selfKnockbackAmount: 0.2
-glock19:
-  name: '&8Glock 19'
-  lore:
-    - '&6Officieel Minetopia Wapen.'
-    - ''
-    - '&7Ammo: &f<Ammo>&8/&f<MaxAmmo>'
-    - '&7Durability: &f<Durability>'
-  material: WOODEN_HOE
-  nbt:
-    key: mtcustom
-    value: glock19_fullmodel
-  damage: 3.3
-  headshotDamage: 7
-  range: 30
-  cooldown: 1
-  grabCooldown: 0.7
-  reloadTime: 1
-  maxAmmo: 10
-  ammunitionKeys:
-    - glock19_ammo
   sound: minetopia.gunshothard
   reloadSound: minetopia.gunreloadhard
   emptySound: minetopia.gunempty
@@ -145,10 +138,16 @@ awg:
   nbt:
     key: mtcustom
     value: awg_normal
-  damage: 3
-  headshotDamage: 6
+  bodyParts:
+    head:
+      - 'DAMAGE:6'
+    torso:
+      - 'DAMAGE:3'
+    legs:
+      - 'DAMAGE:3'
+      - 'POTION:SLOWNESS:1:10'
   range: 20
-  cooldown: 0.4
+  cooldown: 1
   grabCooldown: 3
   reloadTime: 1
   maxAmmo: 15
@@ -171,8 +170,14 @@ awp:
   nbt:
     key: mtcustom
     value: awp
-  damage: 10
-  headshotDamage: 15
+  bodyParts:
+    head:
+      - 'DAMAGE:15'
+    torso:
+      - 'DAMAGE:10'
+    legs:
+      - 'DAMAGE:10'
+      - 'POTION:SLOWNESS:1:10'
   range: 100
   cooldown: 3
   grabCooldown: 3
@@ -186,8 +191,6 @@ awp:
   recoilAmount: 8
   knockbackAmount: 0.5
   selfKnockbackAmount: 0.5
-  scope:
-    enabled: true
 mk14:
   name: '&8MK14'
   lore:
@@ -199,8 +202,14 @@ mk14:
   nbt:
     key: mtcustom
     value: mk14_scoped
-  damage: 7
-  headshotDamage: 10.5
+  bodyParts:
+    head:
+      - 'DAMAGE:10.5'
+    torso:
+      - 'DAMAGE:7'
+    legs:
+      - 'DAMAGE:7'
+      - 'POTION:SLOWNESS:1:10'
   range: 100
   cooldown: 3
   grabCooldown: 3
@@ -227,8 +236,14 @@ ballista:
   nbt:
     key: mtcustom
     value: ballista
-  damage: 8
-  headshotDamage: 12
+  bodyParts:
+    head:
+      - 'DAMAGE:12'
+    torso:
+      - 'DAMAGE:8'
+    legs:
+      - 'DAMAGE:8'
+      - 'POTION:SLOWNESS:1:10'
   range: 25
   cooldown: 3
   grabCooldown: 1
@@ -253,8 +268,14 @@ barett50:
   nbt:
     key: mtcustom
     value: barett50_normal
-  damage: 9
-  headshotDamage: 13
+  bodyParts:
+    head:
+      - 'DAMAGE:13'
+    torso:
+      - 'DAMAGE:9'
+    legs:
+      - 'DAMAGE:9'
+      - 'POTION:SLOWNESS:1:10'
   range: 25
   cooldown: 3
   grabCooldown: 1
@@ -281,8 +302,14 @@ fad:
   nbt:
     key: mtcustom
     value: fad
-  damage: 4
-  headshotDamage: 7
+  bodyParts:
+    head:
+      - 'DAMAGE:7'
+    torso:
+      - 'DAMAGE:4'
+    legs:
+      - 'DAMAGE:4'
+      - 'POTION:SLOWNESS:1:10'
   range: 20
   cooldown: 0.4
   grabCooldown: 2
@@ -307,8 +334,14 @@ m16a4:
   nbt:
     key: mtcustom
     value: m16a4_fullmodel
-  damage: 4
-  headshotDamage: 7
+  bodyParts:
+    head:
+      - 'DAMAGE:7'
+    torso:
+      - 'DAMAGE:4'
+    legs:
+      - 'DAMAGE:4'
+      - 'POTION:SLOWNESS:1:10'
   range: 20
   cooldown: 0.4
   grabCooldown: 2
@@ -333,8 +366,14 @@ m1a:
   nbt:
     key: mtcustom
     value: m1a_ironsight
-  damage: 4
-  headshotDamage: 7
+  bodyParts:
+    head:
+      - 'DAMAGE:7'
+    torso:
+      - 'DAMAGE:4'
+    legs:
+      - 'DAMAGE:4'
+      - 'POTION:SLOWNESS:1:10'
   range: 20
   cooldown: 0.4
   grabCooldown: 2
