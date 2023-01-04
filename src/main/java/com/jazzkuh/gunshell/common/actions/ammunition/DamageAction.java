@@ -74,7 +74,6 @@ public class DamageAction extends AbstractAmmunitionAction {
             } else if (action.toUpperCase().startsWith("POTION")) {
                 String[] potionInfo = action.split(":");
                 XPotion.matchXPotion(potionInfo[1]).ifPresent(potion -> {
-                    System.out.println("potion matched");
                     int level = Integer.parseInt(potionInfo[2]) - 1;
                     int duration = Integer.parseInt(potionInfo[3]);
 
