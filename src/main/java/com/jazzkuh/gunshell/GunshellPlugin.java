@@ -68,10 +68,10 @@ public final class GunshellPlugin extends JavaPlugin {
         MessagesConfig.init();
         messages.saveConfig();
 
-//        this.licenseVerification = new LicenseVerification(URI.create("https://premium.gunshell.nl/api/premium"), DefaultConfig.LICENSE_KEY.asString(), this.getDescription().getVersion(), "lesnmtubypejipnnlontopxjlbbkirdtafaueymxna");
-//        this.premiumResult = licenseVerification.check();
-//        this.premiumResult.checkStatus(this);
-//        if (!premiumResult.isAuthenticated()) return;
+        this.licenseVerification = new LicenseVerification(URI.create("https://premium.gunshell.nl/api/premium"), DefaultConfig.LICENSE_KEY.asString(), this.getDescription().getVersion(), "lesnmtubypejipnnlontopxjlbbkirdtafaueymxna");
+        this.premiumResult = licenseVerification.check();
+        this.premiumResult.checkStatus(this);
+        if (!premiumResult.isAuthenticated()) return;
 
         setWeaponRegistry(new WeaponRegistry(this));
         this.weaponRegistry.registerFireables("weapons", "builtin.yml");
@@ -95,11 +95,11 @@ public final class GunshellPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
 
         this.getLogger().info(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " has been enabled!");
-//        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
-//            this.premiumResult = licenseVerification.check();
-//
-//            Bukkit.getScheduler().runTask(GunshellPlugin.getInstance(), () -> this.premiumResult.checkStatus(this));
-//        }, 10 * 60 * 20, 10 * 60 * 20);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+            this.premiumResult = licenseVerification.check();
+
+            Bukkit.getScheduler().runTask(GunshellPlugin.getInstance(), () -> this.premiumResult.checkStatus(this));
+        }, 10 * 60 * 20, 10 * 60 * 20);
     }
 
     @Override
