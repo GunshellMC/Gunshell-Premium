@@ -78,10 +78,17 @@ public class PlayerSwapHandListener implements Listener {
                 PluginUtils.getInstance().applyNBTTag(itemStack, GUN_AMMOTYPE_KEY, NBTEditor.getString(ammoItem, AMMUNITION_KEY));
                 fireable.updateItemMeta(itemStack, finalAmmoAmount);
 
-                MessagesConfig.SHOW_AMMO_DURABILITY.get(player,
-                        new PlaceHolder("Durability", durability == -1 ? MessagesConfig.WEAPON_UNBREAKABLE.get() : String.valueOf(NBTEditor.getInt(itemStack, DURABILITY_KEY))),
-                        new PlaceHolder("Ammo", String.valueOf(finalAmmoAmount)),
-                        new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
+                if (durability == -1) {
+                    MessagesConfig.SHOW_AMMO_DURABILITY_UNBREAKABLE.get(player,
+                            new PlaceHolder("Durability",MessagesConfig.WEAPON_UNBREAKABLE.get()),
+                            new PlaceHolder("Ammo", String.valueOf(finalAmmoAmount)),
+                            new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
+                } else {
+                    MessagesConfig.SHOW_AMMO_DURABILITY.get(player,
+                            new PlaceHolder("Durability", String.valueOf(durability)),
+                            new PlaceHolder("Ammo", String.valueOf(finalAmmoAmount)),
+                            new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
+                }
 
                 GunshellPlugin.getInstance().getReloadingSet().remove(player.getUniqueId());
                 MessagesConfig.RELOADING_FINISHED.get(player);

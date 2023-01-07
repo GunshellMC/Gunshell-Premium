@@ -29,11 +29,13 @@ public enum MessagesConfig {
     RELOADING_FINISHED("common.reloading.finished", "&aYour weapon has been reloaded."),
     UNLOADING_FINISHED("common.unloading.finished", "&aYour weapon has been unloaded."),
     SHOW_AMMO_DURABILITY("common.ammo-durability", "&aDurability: &f<Durability>\n&aAmmo: &7<Ammo>&8/&7<MaxAmmo>"),
+    SHOW_AMMO_DURABILITY_UNBREAKABLE("common.ammo-durability", "&aDurability: &f<Durability>\n&aAmmo: &7<Ammo>&8/&7<MaxAmmo>"),
     SHOW_DURABILITY("common.durability", "&aDurability: &f<Durability>"),
     BULLET_HIT_OTHER("common.bullet.hit-other", "&cYou've hit &4<Name> &cwith your shot."),
     BULLET_HIT_OTHER_HEADSHOT("common.bullet.hit-other-headshot", "&cYou've hit &4<Name> &cwith a headshot."),
     BULLET_HIT_BY_PLAYER("common.bullet.hit-by-player", "&cYou've been shot by &4<Name>&c."),
     BULLET_SHOT_LAST("common.bullet.shot-last", "&cYou've shot the last bullet in your magazine."),
+    MELEE_HIT_BY_PLAYER("common.melee.hit-by-player", "&cYou've been hit by &4<Name>&c."),
 
     WEAPON_UNBREAKABLE("premium.common.weapon.unbreakable", "&cUnbreakable");
 
