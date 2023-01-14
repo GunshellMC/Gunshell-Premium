@@ -81,7 +81,10 @@ public class FireablePreFireListener implements Listener {
                 }
             }
 
-            MessagesConfig.RELOADING_START.get(player);
+            MessagesConfig.RELOADING_START.get(player,
+                    new PlaceHolder("Durability",MessagesConfig.WEAPON_UNBREAKABLE.get()),
+                    new PlaceHolder("Ammo", String.valueOf(ammoAmount > fireable.getMaxAmmo() ? fireable.getMaxAmmo() : ammoAmount)),
+                    new PlaceHolder("MaxAmmo", String.valueOf(fireable.getMaxAmmo())));
 
             if (ammoItem.getAmount() > 1) {
                 ammoItem.setAmount(ammoItem.getAmount() - 1);
