@@ -96,11 +96,11 @@ public final class GunshellPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
 
         this.getLogger().info(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " has been enabled!");
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
+        /*Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
             this.premiumResult = licenseVerification.check();
 
             Bukkit.getScheduler().runTask(GunshellPlugin.getInstance(), () -> this.premiumResult.checkStatus(this));
-        }, 10 * 60 * 20, 10 * 60 * 20);
+        }, 10 * 60 * 20, 10 * 60 * 20);*/
     }
 
     @Override
