@@ -24,8 +24,8 @@ lama_pickaxe:
   nbt:
     key: mtcustom
     value: lama_pickaxe
-    actions:
-      - "DAMAGE:5"
+  actions:
+    - "DAMAGE:5"
   cooldown: 1
   grabCooldown: 1
   actionType: DAMAGE
@@ -39,8 +39,8 @@ knuppel_birch:
   nbt:
     key: mtcustom
     value: knuppel_birch
-    actions:
-      - "DAMAGE:6"
+  actions:
+    - "DAMAGE:6"
   cooldown: 1
   grabCooldown: 1
   actionType: DAMAGE
@@ -54,8 +54,8 @@ zakmes:
   nbt:
     key: mtcustom
     value: zakmes
-    actions:
-      - "DAMAGE:5"
+  actions:
+    - "DAMAGE:5"
   cooldown: 1
   grabCooldown: 1
   actionType: DAMAGE
@@ -69,8 +69,8 @@ boksbeugel:
   nbt:
     key: mtcustom
     value: boksbeugel
-    actions:
-      - "DAMAGE:4"
+  actions:
+    - "DAMAGE:4"
   cooldown: 1
   grabCooldown: 1
   actionType: DAMAGE
