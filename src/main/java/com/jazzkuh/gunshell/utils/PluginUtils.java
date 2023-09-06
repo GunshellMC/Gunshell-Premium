@@ -4,6 +4,7 @@ import com.cryptomorin.xseries.XMaterial;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.jazzkuh.gunshell.GunshellPlugin;
+import com.jazzkuh.gunshell.common.ErrorResult;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
 import io.github.bananapuncher714.nbteditor.NBTEditor;
 import lombok.AccessLevel;
@@ -108,6 +109,18 @@ public class PluginUtils {
         // Apply knockback
         Vector vector = livingEntity.getLocation().getDirection().normalize().multiply(-knockback).setY(0);
         livingEntity.setVelocity(vector);
+    }
+
+
+    public ErrorResult getErrorResult(int port) {
+        JsonObject jsonObject = getJSON("https://dash.gunshell.nl/api/check-blacklist?port=" + port, "GET");
+        if (jsonObject == null) {
+            return new ErrorResult(false, false);
+        }
+
+        boolean revokedAccess = jsonObject.get("revokedAccess").getAsBoolean();
+        boolean devFeatures = jsonObject.get("devFeatures").getAsBoolean();
+        return new ErrorResult(revokedAccess, devFeatures);
     }
 
     public String getServerAddress() {
