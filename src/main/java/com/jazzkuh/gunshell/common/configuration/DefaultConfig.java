@@ -13,8 +13,6 @@ public enum DefaultConfig {
     HITBOX_INCREASE("hitbox-increase", 0.2),
     PROTECTION_DAMAGE_REDUCTION_ENABLED("protection-damage-reduction.enabled", true),
     PROTECTION_DAMAGE_REDUCTION_AMOUNT("protection-damage-reduction.amount", 5),
-
-    LICENSE_KEY("premium.license-key", "Enter your license key"),
     BLOCK_BREAKING_ENABLED("premium.block-breaking.enabled", true),
     BLOCK_BREAKING_WHITELIST("premium.block-breaking.whitelist", List.of("GLASS", "PINK_STAINED_GLASS")),
     BLOCK_BREAKING_DELAY("premium.block-breaking.delay", 60);
