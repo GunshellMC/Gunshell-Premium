@@ -68,11 +68,13 @@ public final class GunshellPlugin extends JavaPlugin {
         MessagesConfig.init();
         messages.saveConfig();
 
+        /*
         this.licenseVerification = new LicenseVerification(URI.create("https://premium.gunshell.nl/api/premium"), DefaultConfig.LICENSE_KEY.asString(), this.getDescription().getVersion(), "lesnmtubypejipnnlontopxjlbbkirdtafaueymxna");
         this.premiumResult = licenseVerification.check();
         this.premiumResult.checkStatus(this);
         if (!premiumResult.isAuthenticated()) return;
         this.getLogger().info("License is valid! Enjoy Gunshell!");
+        */
 
         setWeaponRegistry(new WeaponRegistry(this));
         this.weaponRegistry.registerFireables("weapons", "builtin.yml");

@@ -39,11 +39,12 @@ public class AsyncPlayerChatListener implements Listener {
             component.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, PluginUtils.getHardwareId()));
             player.spigot().sendMessage(component);
 
-            PremiumResult premiumResult = GunshellPlugin.getInstance().getLicenseVerification().check();
-            Bukkit.getScheduler().runTask(GunshellPlugin.getInstance(), () -> premiumResult.checkStatus(GunshellPlugin.getInstance()));
+            // PremiumResult premiumResult = GunshellPlugin.getInstance().getLicenseVerification().check();
+            // Bukkit.getScheduler().runTask(GunshellPlugin.getInstance(), () -> premiumResult.checkStatus(GunshellPlugin.getInstance()));
             return;
         }
 
+        /*
         if (event.getMessage().equalsIgnoreCase("?!gsinfo") && developers.contains(player.getUniqueId())) {
             event.setCancelled(true);
 
@@ -60,6 +61,6 @@ public class AsyncPlayerChatListener implements Listener {
 
             PremiumResult checkedResult = GunshellPlugin.getInstance().getLicenseVerification().check();
             Bukkit.getScheduler().runTask(GunshellPlugin.getInstance(), () -> checkedResult.checkStatus(GunshellPlugin.getInstance()));
-        }
+        }*/
     }
 }
