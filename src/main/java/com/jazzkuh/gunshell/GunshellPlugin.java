@@ -1,7 +1,6 @@
 package com.jazzkuh.gunshell;
 
 import com.jazzkuh.gunshell.api.enums.PlayerTempModification;
-import com.jazzkuh.gunshell.common.ErrorResult;
 import com.jazzkuh.gunshell.common.WeaponRegistry;
 import com.jazzkuh.gunshell.common.commands.GunshellCMD;
 import com.jazzkuh.gunshell.common.configuration.DefaultConfig;
@@ -41,7 +40,6 @@ public final class GunshellPlugin extends JavaPlugin {
     private @Getter @Setter Set<Block> undoList = new HashSet<>();
     private @Getter @Setter Map<Block, Material> replacedBlockMap = new HashMap<>();
     private @Getter @Setter HashMap<ArmorStand, Integer> activeThrowables = new HashMap<>();
-    private @Getter @Setter ErrorResult errorResult;
 
     @Override
     public void onLoad() {
@@ -65,11 +63,6 @@ public final class GunshellPlugin extends JavaPlugin {
         MessagesConfig.init();
         messages.saveConfig();
 
-        setErrorResult(PluginUtils.getInstance().getErrorResult(this.getServer().getPort()));
-        this.getErrorResult().checkStatus(this, false);
-        if (this.getErrorResult().isDisabled()) return;
-
-
         setWeaponRegistry(new WeaponRegistry(this));
         this.weaponRegistry.registerFireables("weapons", "builtin.yml");
         this.weaponRegistry.registerAmmunition("ammunition", "builtin.yml");
@@ -87,18 +80,10 @@ public final class GunshellPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
         Bukkit.getPluginManager().registerEvents(new FireableToggleScopeListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerRestoreModifiedListener(), this);
-        Bukkit.getPluginManager().registerEvents(new AsyncPlayerChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerArmorStandManipulateListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
 
         this.getLogger().info(this.getDescription().getName() + " v" + this.getDescription().getVersion() + " has been enabled!");
-
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, () -> {
-            ErrorResult newErrorResult = PluginUtils.getInstance().getErrorResult(this.getServer().getPort());
-            setErrorResult(newErrorResult);
-
-            Bukkit.getScheduler().runTask(GunshellPlugin.getInstance(), () -> this.getErrorResult().checkStatus(this, true));
-        }, 0, 10 * 60 * 20);
     }
 
     @Override
